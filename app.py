@@ -9,6 +9,7 @@ CORS(app)
 
 # Load your trained machine learning model
 model = joblib.load('./model.pkl')
+model1 = joblib.load('./model1.pkl')
 
 @app.route('/hello', methods=['GET'])
 def hello():
@@ -29,6 +30,28 @@ def predict():
 
     # Process the features and make predictions using the model
     prediction = model.predict(input_df)
+
+    # Return the prediction as JSON response
+    response = {'prediction': prediction.tolist()}
+    output = response["prediction"][0]
+    return jsonify(response) 
+
+
+@app.route('/predict-vehicle', methods=['POST'])
+@cross_origin(origin='http://localhost:3000', allow_headers=['Content-Type'])
+def predictVehicle():
+    data = request.get_json()  # Get input data from the request
+    print(data)
+    # Convert the data to a Pandas DataFrame
+    input_df = pd.DataFrame(data['features'], columns=[
+        ["task_id", "stop_id"]
+    ])
+
+    # input_df = pd.DataFrame(data)
+    print(input_df)
+
+    # Process the features and make predictions using the model
+    prediction = model1.predict(input_df)
 
     # Return the prediction as JSON response
     response = {'prediction': prediction.tolist()}
