@@ -1,4 +1,4 @@
-# Mental-Health-Prediction
+# Route-Vehicle-Prediction
 > Route and Vehicle Prediction with Machine-Learning.
 
 # How to run the app?
